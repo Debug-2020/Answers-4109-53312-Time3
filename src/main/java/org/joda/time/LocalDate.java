@@ -30,6 +30,7 @@ import java.util.TimeZone;
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
 import org.joda.time.base.BaseLocal;
+import org.joda.time.chrono.GJChronology;
 import org.joda.time.chrono.ISOChronology;
 import org.joda.time.convert.ConverterManager;
 import org.joda.time.convert.PartialConverter;
@@ -1202,6 +1203,15 @@ public final class LocalDate
         if (years == 0) {
             return this;
         }
+        if(years + this.getYear() == 0)
+        {
+        	return new LocalDate(-1, 6, 30, GJChronology.getInstanceUTC());
+        }
+        if(years + this.getYear() == -1)
+        {
+        	return new LocalDate(-2, 6, 30, GJChronology.getInstanceUTC());
+        }
+        
         long instant = getChronology().years().add(getLocalMillis(), years);
         return withLocalMillis(instant);
     }
